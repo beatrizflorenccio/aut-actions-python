@@ -1,9 +1,0 @@
-[
-    {
-        "type": "Project",
-        "actions": {
-            "folders": ["src/scss", "src/js", "src/assets"],
-            "files": ["src/index.html", "src/scss/main.scss", "src/js/script.js"]
-        }
-    }
-]

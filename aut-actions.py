@@ -21,7 +21,7 @@ def criaArquivos(arquivos, nomeProjeto=''):
         caminhoCompleto = os.path.join(nomeProjeto, destino, nomeArquivo)
 
         if not os.path.isfile(caminhoCompleto):
-            print(f'BAIXANDO... {fonte}')
+            print(f'BAIXANDO...{fonte}'')
             urllib.request.urlretrieve(fonte, caminhoCompleto)
 
 

@@ -6,34 +6,32 @@ from pathvalidate import sanitize_filename #limpeza de caracteres especiais
 import shutil #mover arquivos
 
 def criaPastas(pastas, nomeProjeto=''):
-    global nomeProjetoLimpo 
-    nomeProjetoLimpo = sanitize_filename(nomeProjeto)
+    nomeProjeto = sanitize_filename(nomeProjeto)
     
     for pasta in pastas:
-        nomePasta = os.path.join(nomeProjetoLimpo, pasta)
+        nomePasta = os.path.join(nomeProjeto, pasta)
         os.makedirs(nomePasta, True)
 
-def criaArquivos(arquivos):
+def criaArquivos(arquivos, nomeProjeto=''):
+    nomeProjeto = sanitize_filename(nomeProjeto)
     for arquivo in arquivos:
-        open(arquivo, 'x')
-    
-        if '.html' in arquivo:
-            pasta = "src"
-            destino = os.path.join(nomeProjetoLimpo, pasta)
-            shutil.move(arquivo, destino)
+        fonte = arquivo["from"]
+        destino = arquivo["to"]
+        nomeArquivo = fonte.rsplit("/", 1)[-1]
+        caminhoCompleto = os.path.join(nomeProjeto, destino, nomeArquivo)
 
-        if '.scss' in arquivo:
-            pasta = "src/scss"
-            destino = os.path.join(nomeProjetoLimpo, pasta)
-            shutil.move(arquivo, destino)
+        if not os.path.isfile(caminhoCompleto):
+            print(f'BAIXANDO... {fonte}')
+            urllib.request.urlretrieve(fonte, caminhoCompleto)
 
-        if '.js' in arquivo:
-            pasta = "src/js"
-            destino = os.path.join(nomeProjetoLimpo, pasta)
-            shutil.move(arquivo, destino)
+
+links = [
+    {"from": "http://127.0.0.1:5500/pastaBase/index.html", "to": "src"},
+    {"from": "http://127.0.0.1:5500/pastaBase/script.js", "to": "src/js"},
+    {"from": "http://127.0.0.1:5500/pastaBase/main.scss", "to": "src/scss"}
+    ]
 
 pastas = ['src/scss', 'src/js', 'src/assets']
-arquivos = ['index.html', 'main.scss', 'script.js']
 
 criaPastas(pastas, 'teste')
-criaArquivos(arquivos)
+criaArquivos(links, 'teste')

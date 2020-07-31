@@ -1,25 +1,22 @@
 import os
 import sys
-import shutil
 
 def criaPastas(nomeDoProjeto=''):
     
     # estrutura do projeto
-    estrutura = ['src', 'src\scss', 'src\js']
+    projeto = {
+        'src':'index.html', 'src\scss':'main.scss', 'src\js':'script.js'
+    }
 
     # Cria cada pasta da estrutura
-    num_pasta = 0
-    for pasta in estrutura:
+    for pasta in projeto:
         
         pastaProjeto = os.path.join(nomeDoProjeto, pasta)
         os.makedirs(pastaProjeto, True)
 
-        # Arquivos criados
-        arquivos = ['index.html', 'main.scss', 'script.js']
+        #caminho do arquivo que será criado
+        caminho = os.path.join(nomeDoProjeto, pasta, projeto[pasta])
 
-        file = open(arquivos[num_pasta], 'w')
-        num_pasta += 1
-
-               
+        file = open(caminho, 'w')   
 
 criaPastas('teste')
